@@ -18,6 +18,7 @@ from .xml_style import XMLDataset
 from .aitod import AITODDataset
 from .aitodv2 import AITODv2Dataset
 from .visdrone import VisdroneDataset
+from .sen1ship import Sen1shipDataset
 
 __all__ = [
     'CustomDataset', 'XMLDataset', 'CocoDataset', 'DeepFashionDataset',
@@ -27,5 +28,6 @@ __all__ = [
     'ClassBalancedDataset', 'WIDERFaceDataset', 'DATASETS', 'PIPELINES',
     'build_dataset', 'replace_ImageToTensor', 'get_loading_pipeline',
     'NumClassCheckHook', 'CocoPanopticDataset', 'MultiImageMixDataset',
-    'OpenImagesDataset', 'OpenImagesChallengeDataset','AITODDataset', 'AITODv2Dataset','VisdroneDataset'
+    'OpenImagesDataset', 'OpenImagesChallengeDataset','AITODDataset', 'AITODv2Dataset','VisdroneDataset',
+    'Sen1shipDataset'
 ]

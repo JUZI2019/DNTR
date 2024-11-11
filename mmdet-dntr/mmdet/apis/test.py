@@ -29,13 +29,28 @@ def single_gpu_test(model,
             result = model(return_loss=False, rescale=True, **data)
 
         batch_size = len(result)
+
+        # if show or out_dir:
+        #     if batch_size == 1 and isinstance(data['img'][0], torch.Tensor):
+        #         img_tensor = data['img'][0]
+        #     else:
+        #         img_tensor = data['img'][0].data[0]
+        #     img_metas = data['img_metas'][0].data[0]
+        #     imgs = tensor2imgs(img_tensor, **img_metas[0]['img_norm_cfg'])
         if show or out_dir:
-            if batch_size == 1 and isinstance(data['img'][0], torch.Tensor):
-                img_tensor = data['img'][0]
+            # 检查 img_tensor 是否为 torch.Tensor 类型
+            if isinstance(data['img'][0], torch.Tensor):
+                # 如果是单张图像（batch_size == 1）
+                img_tensor = data['img'][0].unsqueeze(0) if batch_size == 1 else data['img'][0]
             else:
-                img_tensor = data['img'][0].data[0]
+                # 如果是多张图像
+                img_tensor = data['img'][0].data[0]            
+            # 检查 img_tensor 的维度并确保为 4 维
+            if img_tensor.ndim == 3:
+                img_tensor = img_tensor.unsqueeze(0)  # 将 3 维张量扩展为 4 维
             img_metas = data['img_metas'][0].data[0]
-            imgs = tensor2imgs(img_tensor, **img_metas[0]['img_norm_cfg'])
+            imgs = tensor2imgs(img_tensor, **img_metas[0]['img_norm_cfg'])        
+
             assert len(imgs) == len(img_metas)
 
             for i, (img, img_meta) in enumerate(zip(imgs, img_metas)):
